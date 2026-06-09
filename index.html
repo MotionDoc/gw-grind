@@ -11,8 +11,18 @@
 <body>
 
 <header>
-  <div class="logo">WE<span>_GRIND</span></div>
-  <span class="tagline">AI-powered study cards</span>
+  <div class="logo">WE_<span>Grind</span></div>
+  <div class="header-right">
+    <button class="history-btn" id="historyBtn" style="display:none;" onclick="toggleHistory()">📚 History</button>
+    <div class="auth-section" id="authSection">
+      <button class="signin-btn" id="signinBtn" onclick="handleSignIn()">Sign in with Google</button>
+      <div class="user-info" id="userInfo" style="display:none;">
+        <img class="user-avatar" id="userAvatar" src="" alt="avatar"/>
+        <span class="user-name" id="userName"></span>
+        <button class="signout-btn" onclick="handleSignOut()">Sign out</button>
+      </div>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -71,6 +81,17 @@
   </div>
 <!-- Study Screen -->
   <div class="study-screen" id="studyScreen" style="display:none;">
+    <!-- History Screen -->
+  <div class="history-screen" id="historyScreen" style="display:none;">
+    <div class="history-header">
+      <h2 class="history-title">📚 My Deck History</h2>
+      <button class="close-history-btn" onclick="toggleHistory()">✕ Close</button>
+    </div>
+    <div class="history-grid" id="historyGrid"></div>
+    <div class="history-empty" id="historyEmpty" style="display:none;">
+      <p>No decks saved yet. Generate your first deck!</p>
+    </div>
+  </div>
     
     <!-- Study Header -->
     <div class="study-header">
@@ -139,6 +160,6 @@
   </div>
 </main>
 
-<script src="js/main.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

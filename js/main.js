@@ -1,3 +1,4 @@
+import { auth, signIn, signOutUser, saveDeck, getDeckHistory, onAuthStateChanged } from './firebase.js';
 const GEMINI_URL = '/.netlify/functions/generate';
 
 let uploadedFiles = [];
@@ -165,6 +166,11 @@ Return ONLY a JSON array, no markdown, no explanation. Format:
       const cards = JSON.parse(clean);
 
       allDecks.push({ name: file.name, cards });
+
+      // Save to Firebase if user is logged in
+if (auth.currentUser) {
+  await saveDeck({ name: file.name, cards });
+}
 
     } catch (err) {
       showError(`Failed on ${file.name}: ${err.message}`);
@@ -426,3 +432,89 @@ function exportCards() {
   a.click();
   URL.revokeObjectURL(url);
 }
+// Auth handlers
+async function handleSignIn() {
+  await signIn();
+}
+
+async function handleSignOut() {
+  await signOutUser();
+  document.getElementById('userInfo').style.display = 'none';
+  document.getElementById('signinBtn').style.display = 'block';
+  document.getElementById('historyBtn').style.display = 'none';
+}
+
+// Listen for auth state changes
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById('signinBtn').style.display = 'none';
+    document.getElementById('userInfo').style.display = 'flex';
+    document.getElementById('userName').textContent = user.displayName;
+    document.getElementById('userAvatar').src = user.photoURL;
+    document.getElementById('historyBtn').style.display = 'block';
+  } else {
+    document.getElementById('signinBtn').style.display = 'block';
+    document.getElementById('userInfo').style.display = 'none';
+    document.getElementById('historyBtn').style.display = 'none';
+  }
+});
+
+// Toggle history screen
+async function toggleHistory() {
+  const historyScreen = document.getElementById('historyScreen');
+  const isVisible = historyScreen.style.display !== 'none';
+
+  if (isVisible) {
+    historyScreen.style.display = 'none';
+  } else {
+    historyScreen.style.display = 'block';
+    await loadHistory();
+  }
+}
+
+// Load deck history from Firestore
+async function loadHistory() {
+  const grid = document.getElementById('historyGrid');
+  const empty = document.getElementById('historyEmpty');
+  grid.innerHTML = '<p style="color:var(--muted); font-size:0.8rem;">Loading...</p>';
+
+  const decks = await getDeckHistory();
+
+  if (decks.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.innerHTML = '';
+
+  decks.forEach((deck, i) => {
+    const date = deck.createdAt?.toDate?.() || new Date();
+    const dateStr = date.toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'short', year: 'numeric'
+    });
+
+    grid.innerHTML += `
+      <div class="history-card">
+        <div class="history-card-name">📄 ${deck.name}</div>
+        <div class="history-card-meta">${deck.cards.length} cards · ${dateStr}</div>
+        <button class="history-card-btn" onclick="studyHistoryDeck(${i})">Study Again →</button>
+      </div>`;
+  });
+
+  window.historyDecks = decks;
+}
+
+// Study a deck from history
+function studyHistoryDeck(i) {
+  const deck = window.historyDecks[i];
+  window.generatedDecks = [deck];
+  toggleHistory();
+  openDeck(0);
+}
+// Expose functions to global scope
+window.handleSignIn = handleSignIn;
+window.handleSignOut = handleSignOut;
+window.toggleHistory = toggleHistory;
+window.studyHistoryDeck = studyHistoryDeck;

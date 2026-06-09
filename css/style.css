@@ -848,3 +848,187 @@
     font-size: 2.5rem;
   }
 }
+/* HEADER RIGHT */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/* AUTH */
+.signin-btn {
+  background: white;
+  color: #333;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.signin-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+}
+
+.user-name {
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.signin-btn {
+  background: linear-gradient(270deg, #7c6ef5, #4f8ef7, #7c6ef5);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.signin-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.signout-btn:hover {
+  border-color: #e85447;
+  color: #e85447;
+}
+
+.history-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.history-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* HISTORY SCREEN */
+.history-screen {
+  margin-top: 2rem;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.history-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.close-history-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+
+.close-history-btn:hover {
+  border-color: #e85447;
+  color: #e85447;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.history-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: all 0.15s;
+}
+
+.history-card:hover {
+  border-color: var(--accent);
+}
+
+.history-card-name {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.history-card-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+
+.history-card-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.history-card-btn:hover {
+  opacity: 0.85;
+}
+
+.history-empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
