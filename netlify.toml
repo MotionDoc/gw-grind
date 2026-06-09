@@ -2,8 +2,9 @@
   publish = "."
   functions = "netlify/functions"
 
+# Scopes the 26-second timeout to all functions globally using valid syntax
 [functions]
-  timeout = 26
+  [functions.timeout]
 
 [[redirects]]
   from = "/.netlify/functions/*"
